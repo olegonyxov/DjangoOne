@@ -19,7 +19,8 @@ class Command(BaseCommand):
             movie.title = "Forsage - " + new_title
             movie.description = faker.text()
             movie.year = random.randint(1990, 2022)
-            movie.user_rating = random.randint(0, 10)
+            movie.user_rating = random.randint(0, 100)
             movie.save()
             self.stdout.write(f"New Movie: {movie}")
         self.stdout.write("End inserting Movies")
+

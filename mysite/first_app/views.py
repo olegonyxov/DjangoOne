@@ -26,8 +26,28 @@ def movies_top_input(request, top_input=1):
     return render(request, "movies_all.html", context={'get_all': get_count})
 
 
-def movies_info(request, input_title: str):
+def movies_info(request, input_title):
     movie = Movie.objects.get(title=input_title)
     other_info = movie.description, movie.pub_date, movie.url, movie.runtime
     output = movie, *other_info
     return render(request, "movies_all.html", context={'get_all': output})
+
+
+def movie_rate_up(request, input_title):
+    movie = Movie.objects.get(title=input_title)
+    if movie.user_rating >= 100:
+        pass
+    else:
+        movie.user_rating += 1
+        movie.save()
+    return HttpResponse("Thank You For Voting")
+
+
+def movie_rate_down(request, input_title):
+    movie = Movie.objects.get(title=input_title)
+    if movie.user_rating >= 0:
+        pass
+    else:
+        movie.user_rating -= 1
+        movie.save()
+    return HttpResponse("Thank You For Voting")
