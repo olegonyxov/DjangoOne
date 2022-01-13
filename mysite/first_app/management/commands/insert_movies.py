@@ -16,7 +16,7 @@ class Command(BaseCommand):
             self.stdout.write("Start inserting Movies")
             movie = Movie()
             new_title = " ".join(faker.text().split()[:3])
-            movie.title = "Forsage : " + new_title
+            movie.title = "Forsage - " + new_title
             movie.description = faker.text()
             movie.year = random.randint(1990, 2022)
             movie.user_rating = random.randint(0, 10)
