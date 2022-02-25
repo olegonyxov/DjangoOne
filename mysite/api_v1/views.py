@@ -2,7 +2,7 @@ from rest_framework import authentication, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from mysite.first_app.models import Movie
+from first_app.models import Movie
 
 
 class ListMovie(APIView):
