@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from mysite.first_app.models import Movie
+from first_app.models import Movie
 
 
 class MovieSerializer(serializers.HyperlinkedModelSerializer):

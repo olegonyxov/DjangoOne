@@ -1,7 +1,8 @@
 from rest_framework import authentication, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from rest_framework import viewsets
+from api_v1.serializers import MovieSerializer
 from first_app.models import Movie
 
 
@@ -21,3 +22,9 @@ class ListMovie(APIView):
         """
         movies = [movie.title for movie in Movie.objects.all()]
         return Response(movies)
+class MovieViewSet(viewsets.ViewSet):
+
+    def list(self,request):
+        queryset= Movie.objects.all()
+        serializer = MovieSerializer(queryset, many= True)
+        return Response(serializer.data)
