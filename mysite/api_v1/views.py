@@ -22,9 +22,42 @@ class ListMovie(APIView):
         """
         movies = [movie.title for movie in Movie.objects.all()]
         return Response(movies)
+
+
 class MovieViewSet(viewsets.ViewSet):
 
     def list(self,request):
         queryset= Movie.objects.all()
         serializer = MovieSerializer(queryset, many= True)
         return Response(serializer.data)
+
+    def create(self, request):
+        serializer = MovieSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+
+        return Response(request)
+    def retrieve(self, request, pk=None):
+        pass
+
+    def update(self, request, pk=None):
+        pass
+
+    def partial_update(self, request, pk=None):
+        pass
+
+    def destroy(self, request, pk=None):
+        pass
+
+
+class Movies_top_tenViewSet(viewsets.ViewSet):
+
+    def list(self,request):
+        queryset= Movie.objects.order_by('-user_rating')[:10]
+        serializer = MovieSerializer(queryset, many= True)
+        return Response(serializer.data)
+
+
+

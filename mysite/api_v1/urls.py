@@ -5,6 +5,7 @@ from . import views
 router = routers.DefaultRouter()
 # router.register(r'movies', views.ListMovie)
 router.register(r'movies', views.MovieViewSet, basename="movies")
+router.register(r'movies_top_ten', views.Movies_top_tenViewSet, basename="movies_top_ten")
 
 
 # Wire up our API using automatic URL routing.
