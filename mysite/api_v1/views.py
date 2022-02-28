@@ -35,9 +35,11 @@ class MovieViewSet(viewsets.ViewSet):
 
     def create(self, request):
         serializer = MovieSerializer(data=request.data)
-        if serializer.is_valid(raise_exeption=True):
+        if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        else:
+            raise ValidationError(serializer.errors)
 
     def retrieve(self, request, pk=None):
         try:
@@ -54,9 +56,11 @@ class MovieViewSet(viewsets.ViewSet):
         except Movie.DoesNotExist as e:
             raise ValidationError(e)
         serializer = MovieSerializer(queryset, data=request.data)
-        if serializer.is_valid(raise_exeption=True):
+        if serializer.is_valid():
             serializer.save()
-        return Response(serializer.data)
+            return Response(serializer.data)
+        else:
+            raise ValidationError(serializer.errors)
 
     def partial_update(self, request, pk=None):
         pass
@@ -77,6 +81,8 @@ class Movies_top_tenViewSet(viewsets.ViewSet):
         queryset = Movie.objects.order_by('-user_rating')[:int(pk)]
         serializer = MovieSerializer(queryset, many=True)
         return Response(serializer.data)
+
+
 
 
 
