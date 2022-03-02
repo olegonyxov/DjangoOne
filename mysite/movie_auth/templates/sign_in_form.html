@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign_in</title>
+</head>
+<body>
+      <form
+          method="post"
+          action="{{ auth_url }}" >
+          {% csrf_token %}
+          <input name = "username" type ="text" />
+          <input name = "password" type = "password" />
+
+          <button
+              class="btn btn-primary" >
+              Sign in
+          </button>
+      </form>
+</body>
+</html>

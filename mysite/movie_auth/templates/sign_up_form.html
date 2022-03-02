@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign_in</title>
+</head>
+<body>
+      <form
+          method="post"
+          action="{{ sign_up_url }}" >
+          {% csrf_token %}
+          Username: <input name = "username" type ="text" />
+          Password: <input name = "password" type = "password" /><br>
+          Email: <input name = "email" type = "email" />
+          Date of birth :<input name = "dob" type = "date" />
+            <hr>
+          <button
+              class="btn btn-primary" >
+              Sign up
+          </button>
+      </form>
+</body>
+</html>

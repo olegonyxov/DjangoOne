@@ -20,6 +20,7 @@ urlpatterns = [
     path('', include('first_app.urls')),
     path('api/v1/', include('api_v1.urls')),
     path('admin/', admin.site.urls),
+    path('auth/', include('movie_auth.urls')),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
