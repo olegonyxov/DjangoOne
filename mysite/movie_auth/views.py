@@ -26,12 +26,11 @@ def sign_up(request):
         password = request.POST['password']
         email = request.POST['email']
         dob = request.POST['dob']
-        user = User(username=username,
-                    password=password,
-                    email=email,
-                    dob=datetime.datetime.strptime(dob, "%Y-%m-%d"))
-        user.save()
-
+        User.objects.create_user(
+            username=username,
+            password=password,
+            email=email,
+            dob=datetime.datetime.strptime(dob, "%Y-%m-%d"))
         return HttpResponse(f"Success")
 
     else:
