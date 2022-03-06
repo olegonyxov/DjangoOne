@@ -1,10 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import ( BaseUserManager, AbstractBaseUser )
-from django.contrib.auth.models import User as DjangoUser
-
-
-class User(DjangoUser):
-    # user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
+from django.contrib.auth.models import User
+#
+class User(User):
+#     # user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
     dob= models.DateField()
 
 class M_UserManager(BaseUserManager):
