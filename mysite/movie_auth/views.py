@@ -1,6 +1,6 @@
 import datetime
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from .models import User
@@ -37,4 +37,7 @@ def sign_up(request):
     else:
         response = TemplateResponse(request, "sign_up_form.html", {'sign_up_url': '/auth/sign_up/'})
         return response
+
+def log_out(request):
+    logout(request)
 
