@@ -22,14 +22,11 @@ def sign_in(request):
 
 def sign_up(request):
     if request.POST:
-        username = request.POST['username']
-        password = request.POST['password']
-        email = request.POST['email']
         dob = request.POST['dob']
         User.objects.create_user(
-            username=username,
-            password=password,
-            email=email,
+            username=request.POST['username'],
+            password=request.POST['password'],
+            email=request.POST['email'],
             dob=datetime.datetime.strptime(dob, "%Y-%m-%d"))
         return HttpResponse(f"Success")
 
