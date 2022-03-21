@@ -44,7 +44,7 @@ def log_out(request):
 
 class AuthSignIn(APIView):
 
-    def post(self, request, format=None):
+    def post(self, request,):
         token = None
         user_data=SignInSerializer(data=request.data)
         if user_data.is_valid(raise_exception=True):
@@ -60,7 +60,7 @@ class AuthSignIn(APIView):
 
 class AuthSignUp(APIView):
 
-    def post(self, request, format=None):
+    def post(self, request, ):
         user_data = SignUpSerializer(data=request.data)
 
         if user_data.is_valid():
