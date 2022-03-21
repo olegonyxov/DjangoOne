@@ -64,6 +64,10 @@ class AuthSignUp(APIView):
         user_data = SignUpSerializer(data=request.data)
 
         if user_data.is_valid():
-            user_data
-
+            M_UserManager().create_user_api(
+                username=user_data.validated_data["username"],
+                password=user_data.validated_data["password"],
+                email=user_data.validated_data["email"],
+                dob=user_data.validated_data["dob"]
+            )
         return HttpResponse("User Registered , Login please")

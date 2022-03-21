@@ -31,3 +31,11 @@ class M_UserManager(BaseUserManager):
         if user.check_password(password):
 
             return Token.objects.get_or_create(user=user)
+
+    def create_user_api(self,username, email, dob, password=None):
+        user = User.objects.create_user(username= username,
+                                        password=password,
+                                        email=email,
+                                        dob=dob
+                                        )
+        return user
