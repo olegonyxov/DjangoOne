@@ -3,7 +3,11 @@ import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
-from .models import User
+from rest_framework.views import APIView
+from .serializers import SignInSerializer,SignUpSerializer
+from .models import User, M_UserManager
+
+
 def sign_in(request):
     if request.POST:
         username = request.POST['username']
@@ -17,7 +21,6 @@ def sign_in(request):
     else:
         response = TemplateResponse(request, "sign_in_form.html", {'auth_url': '/auth/'})
         return response
-
 
 
 def sign_up(request):
@@ -34,6 +37,33 @@ def sign_up(request):
         response = TemplateResponse(request, "sign_up_form.html", {'sign_up_url': '/auth/sign_up/'})
         return response
 
+
 def log_out(request):
     logout(request)
 
+
+class AuthSignIn(APIView):
+
+    def post(self, request, format=None):
+        token = None
+        user_data=SignInSerializer(data=request.data)
+        if user_data.is_valid(raise_exception=True):
+            try:
+                token = M_UserManager().get_user__token_by_credentials(
+                    username=user_data.validated_data["username"],
+                    password=user_data.validated_data["password"])
+            except User.DoesNotExist:
+                raise Exception("User Not Found")
+            if not token:
+                return HttpResponse("incorrect credentialss")
+        return HttpResponse(f'Token: {token[0]}')
+
+class AuthSignUp(APIView):
+
+    def post(self, request, format=None):
+        user_data = SignUpSerializer(data=request.data)
+
+        if user_data.is_valid():
+            user_data
+
+        return HttpResponse("User Registered , Login please")
