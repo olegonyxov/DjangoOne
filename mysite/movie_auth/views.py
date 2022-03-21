@@ -69,5 +69,5 @@ class AuthSignUp(APIView):
                 password=user_data.validated_data["password"],
                 email=user_data.validated_data["email"],
                 dob=user_data.validated_data["dob"]
-            )
+            )  #hashed - Yes
         return HttpResponse("User Registered , Login please")
