@@ -2,11 +2,13 @@ from api_v1.serializers import MovieSerializer
 from first_app.models import Movie
 from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import  TokenAuthentication
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
+# from rest_framework.authentication import TokenAuthentication
 
 class ListMovie(APIView):
     """
@@ -28,9 +30,9 @@ class ListMovie(APIView):
 
 
 class MovieViewSet(viewsets.ViewSet):
-
     permission_classes = [IsAuthenticated]
 
+    @method_decorator(cache_page(60))                     #the fastest/ but +middleware
     def list(self, request):
         queryset = Movie.objects.all()
         serializer = MovieSerializer(queryset, many=True)
@@ -53,7 +55,6 @@ class MovieViewSet(viewsets.ViewSet):
         serializer = MovieSerializer(queryset)
         return Response(serializer.data)
 
-
     def update(self, request, pk=None):
         try:
             queryset = Movie.objects.get(pk=pk)
@@ -75,6 +76,7 @@ class MovieViewSet(viewsets.ViewSet):
 
 class Movies_top_tenViewSet(viewsets.ViewSet):
 
+    @method_decorator(cache_page(60))
     def list(self, request):
         queryset = Movie.objects.order_by('-user_rating')[:10]
         serializer = MovieSerializer(queryset, many=True)
@@ -85,8 +87,3 @@ class Movies_top_tenViewSet(viewsets.ViewSet):
         queryset = Movie.objects.order_by('-user_rating')[:int(pk)]
         serializer = MovieSerializer(queryset, many=True)
         return Response(serializer.data)
-
-
-
-
-
