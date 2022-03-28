@@ -30,7 +30,7 @@ class ListMovie(APIView):
 
 
 class MovieViewSet(viewsets.ViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     @method_decorator(cache_page(60))                     #the fastest/ but +middleware
     def list(self, request):
