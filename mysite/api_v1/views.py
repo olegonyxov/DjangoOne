@@ -1,12 +1,14 @@
 from api_v1.serializers import MovieSerializer
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from first_app.models import Movie
 from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics
+
 
 # from rest_framework.authentication import TokenAuthentication
 
@@ -30,11 +32,12 @@ class ListMovie(APIView):
 
 
 class MovieViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
-    @method_decorator(cache_page(60))                     #the fastest/ but +middleware
+
+    @method_decorator(cache_page(60))  # the fastest/ but +middleware
     def list(self, request):
-        queryset = Movie.objects.all()
+        queryset = Movie.objects.order_by("-year").all()
         serializer = MovieSerializer(queryset, many=True)
 
         return Response(serializer.data)
@@ -49,7 +52,7 @@ class MovieViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
         try:
-            queryset = Movie.objects.get(pk=pk)
+            queryset = Movie.objects.filter(pk=pk)[0]
         except Movie.DoesNotExist as e:
             raise ValidationError(e)
         serializer = MovieSerializer(queryset)
