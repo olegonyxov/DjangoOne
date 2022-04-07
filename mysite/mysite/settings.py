@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "first_app.middlewares.ReqTimer",
+
     # 'django.middleware.cache.FetchFromCacheMiddleware'  timed auth
 
 ]
@@ -153,3 +154,9 @@ CACHES = {
         'LOCATION': 'unique-snowflake',
     }
 }
+
+CELERY_BROKER = 'pyamqp://guest@localhost//'
+CELERY_RESULT_BACKEND = 'rpc'
+CELERY_TIMEZONE = 'UTC'
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30*60

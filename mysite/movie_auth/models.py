@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token
 class User(User):  # strange but needed
     # user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
     dob = models.DateField()
+    is_notified=models.BooleanField(default=False)
 
 
 class M_UserManager(BaseUserManager):
