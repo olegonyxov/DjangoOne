@@ -9,7 +9,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
  'run-me-every-ten-seconds': {
  'task': 'movie_auth.tasks.change_flag',
- 'schedule': crontab(hour=7, minute=0),
+ 'schedule':crontab(hour=7, minute=0),
  'args' :(16, 16)}}
 
 

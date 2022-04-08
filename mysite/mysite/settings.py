@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'api_v1.apps.ApiV1Config',
     'movie_auth.apps.MovieAuthConfig',
     'rest_framework_simplejwt',
-    'django_filters'
+    'django_filters',
+
 ]
 
 MIDDLEWARE = [
