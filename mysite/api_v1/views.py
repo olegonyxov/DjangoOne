@@ -7,6 +7,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import generics
 
 
@@ -34,12 +35,10 @@ class ListMovie(APIView):
 class MovieViewSet(viewsets.ViewSet):
     # permission_classes = [IsAuthenticated]
 
-
     @method_decorator(cache_page(60))  # the fastest/ but +middleware
     def list(self, request):
         queryset = Movie.objects.order_by("-year").all()
         serializer = MovieSerializer(queryset, many=True)
-
         return Response(serializer.data)
 
     def create(self, request):
