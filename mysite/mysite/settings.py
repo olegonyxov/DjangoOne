@@ -9,9 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 from datetime import timedelta
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,6 +48,8 @@ INSTALLED_APPS = [
     'movie_auth.apps.MovieAuthConfig',
     'rest_framework_simplejwt',
     'django_filters',
+    'channels',
+    'websock_ten'
 
 ]
 
@@ -58,7 +63,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "first_app.middlewares.ReqTimer",
-
     # 'django.middleware.cache.FetchFromCacheMiddleware'  timed auth
 
 ]
@@ -89,8 +93,21 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+        'ENGINE': 'django.db.backends.postgresql',
+
+        'NAME': 'mysite_db',
+
+        'USER': 'onyx',
+        #
+        # 'PASSWORD': '1234',
+        #
+        # 'HOST': 'localhost',
+        # 'PORT': '5432'
+
+
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -161,3 +178,16 @@ CELERY_RESULT_BACKEND = 'rpc'
 CELERY_TIMEZONE = 'UTC'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30*60
+
+
+# CHANNELS:
+ASGI_APPLICATION = "olympia.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [CHANNEL_REDIS_HOST],
+            "symmetric_encryption_keys": [SECRET_KEY],
+        },
+    },
+}
