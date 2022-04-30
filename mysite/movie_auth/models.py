@@ -11,7 +11,7 @@ class M_UserManager(BaseUserManager):
     def create_user(self, username, email, dob, password=None):
         if not email:
             raise ValueError("Please enter Your email")
-        if User.objects.filte(email=email).exists():
+        if User.objects.filter(email=email).exists():
             raise ValueError("Email already used")
         user =self.model(
             username=username,
