@@ -6,12 +6,9 @@ from . import views
 router = routers.DefaultRouter()
 # router.register(r'movies', views.ListMovie)
 router.register(r'movies', views.MovieViewSet, basename="movies")
-router.register(r'movies_top_ten', views.Movies_top_tenViewSet, basename="movies_top_ten")
+router.register(r'movies_top_ten', views.MoviesTopTenViewSet, basename="movies_top_ten")
 # router.register(r'movie/(?P<input_title>.+)/$', views.Movies_InfoViewSet, basename='movies_info')
 
-
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
     # path('^movie/(?P<movie>.+)/$', views.Movies_InfoViewSet.as_view())
