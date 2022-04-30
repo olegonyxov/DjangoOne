@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-e6n^u!ckyq*ikbi2*fsol(ee&^-$_++bvf61&zo6d+j*r4$_5h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -48,8 +48,6 @@ INSTALLED_APPS = [
     'movie_auth.apps.MovieAuthConfig',
     'rest_framework_simplejwt',
     'django_filters',
-    'channels',
-    'websock_ten'
 
 ]
 
@@ -95,16 +93,11 @@ DATABASES = {
     'default': {
 
         'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': 'mysite_db',
-
-        'USER': 'onyx',
-        #
-        # 'PASSWORD': '1234',
-        #
-        # 'HOST': 'localhost',
-        # 'PORT': '5432'
-
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': '5432'
 
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
@@ -178,16 +171,3 @@ CELERY_RESULT_BACKEND = 'rpc'
 CELERY_TIMEZONE = 'UTC'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30*60
-
-
-# CHANNELS:
-ASGI_APPLICATION = "olympia.routing.application"
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [CHANNEL_REDIS_HOST],
-            "symmetric_encryption_keys": [SECRET_KEY],
-        },
-    },
-}
