@@ -8,5 +8,5 @@ class ReqTimer:
     def __call__(self, request):
         time_start = time.monotonic()
         response = self.get_response(request)
-        response["X-Request-Timing"] = str(time.monotonic() - time_start)[0:5]
+        response.headers["X-Request-Timing"] = str(time.monotonic() - time_start)[0:5]
         return response
