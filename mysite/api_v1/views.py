@@ -62,14 +62,8 @@ class MovieViewSet(viewsets.ViewSet):
         else:
             raise ValidationError(serializer.errors)
 
-    def partial_update(self, request, pk=None):
-        pass
 
-    def destroy(self, request, pk=None):
-        pass
-
-
-class Movies_top_tenViewSet(viewsets.ViewSet):
+class MoviesTopTenViewSet(viewsets.ViewSet):
 
     def list(self, request):
         queryset = Movie.objects.order_by('-user_rating')[:10]
